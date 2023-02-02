@@ -1,5 +1,7 @@
 #include <iostream>
+
 int main() {
-    std::cout << "Hello, world";
+    int var = 10;
+    std::cout << "Hello, world " << var << std::endl;
     return 0;
 }
