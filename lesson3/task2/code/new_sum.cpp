@@ -36,12 +36,13 @@ int main(){
     std::ofstream fuout("time4.txt");
     for (int j = 1000; j<n; j = j+1000){
         auto begin = std::chrono::steady_clock::now();
-        func(j);
+        for (int k = 0; k<=10; k++)
+            func(j);
         auto end = std::chrono::steady_clock::now();
         auto time_span =
         std::chrono::duration_cast<std::chrono::milliseconds>(end - begin );
 
-        fuout << time_span.count() << ", ";
+        fuout << time_span.count()/10 << ", ";
         fout << j << ", ";
     }
     return 0;
