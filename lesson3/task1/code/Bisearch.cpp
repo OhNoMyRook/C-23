@@ -2,8 +2,8 @@
 #include <chrono>
 #include <fstream>
 
-int const n = 100000000 ;
-int x = 100000001;
+int const n = 10000000 ;
+int x = 10000001;
 int array[n];
 
 int func(int j){
@@ -32,7 +32,7 @@ int func(int j){
 int main(){
     std::ofstream fout("amount2.txt");
     std::ofstream fuout("time2.txt");
-    for (int j = 100000; j<=n; j = j+100000){
+    for (int j = 10000; j<=n; j = j+10000){
         auto begin = std::chrono::steady_clock::now();
         for (int k = 0; k<=10; k++)
             func(j);
