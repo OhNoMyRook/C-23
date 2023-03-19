@@ -13,7 +13,7 @@ void forward_step( int array[], unsigned const begin_idx, unsigned const end_idx
 
 void backward_step( int array[], unsigned const begin_idx, unsigned const end_idx ){
     sorted = true;    
-    for( unsigned idx = end_idx; idx != begin_idx + 1; idx-- )
+    for( unsigned idx = end_idx; idx >= begin_idx + 1; idx-- )
         if (array[idx] < array[idx-1]){
             std::swap (array[idx], array[idx-1]);
             sorted = false;
@@ -35,6 +35,8 @@ int main(){
     for( int i = 0; i <= 19; ++i )
         std::cout << array[i] << " ";
     std::cout << "\n";
+    //forward_step( array, 0, 19);
+    //backward_step( array, 0, 19);
     shaker_sort( array, 0, 19 );
     for( int i = 0; i <= 19; ++i )
         std::cout << array[i] << " ";
