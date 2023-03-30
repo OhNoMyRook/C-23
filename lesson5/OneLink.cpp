@@ -5,25 +5,25 @@ struct ListPair{
     ListPair *next;;
 };
 
-ListPair* add_node( ListPair *const head ){
+ListPair* add_node( ListPair *const head ){ //Добавить в начало (голову) списка
     return new ListPair {0, head};
 }
 
-ListPair* remove_node( ListPair *const head ){
+ListPair* remove_node( ListPair *const head ){ //Удалить указанный
     if ( nullptr == head ) return head;
     auto new_head = head->next;
     delete head;
     return new_head;
 }
 
-void Printlist( ListPair * head ){
+void printlist( ListPair * head ){ //Печать списка в столбик
     while ( head != NULL){
         std::cout << head->data << " " << std::endl;
         head = head->next;
     }   
 }
 
-ListPair* add_after( ListPair *const head){
+ListPair* add_after( ListPair *const head){ //Добавить после указанного хэдэра
     ListPair *temp, *p;
     temp = (ListPair*)malloc(sizeof(ListPair));
     p = head->next;
@@ -32,14 +32,48 @@ ListPair* add_after( ListPair *const head){
     return (temp);
 }
 
+void iter_delete(ListPair* &head){ //Итерационная функция удаления всего списка
+    ListPair* prev = head;
+    while (head){
+        head = head->next;
+        delete(prev);
+        prev = head;
+    }
+}
+
+void recurse_delete(ListPair* &head){ //Рекурсивная функция удаления всего списка
+    if (head == nullptr) return;
+    if (head->next) {
+        recurse_delete(head->next);
+    }
+    delete(head);
+    head = nullptr;
+}
+
+void iter_rotate(ListPair* &head){ //Итерационная функция переворота списка
+    if (head == NULL) return;
+    ListPair *curr, *temp, *prev = NULL;
+    curr = head;
+    while(curr){
+        temp = curr->next;
+        curr->next = prev;
+        prev = curr;
+        curr = temp;
+    }
+    head = prev;
+}
+
 int main(){
     auto head = add_node( nullptr );
     head->data = 0;
-    auto head_1 = add_node( head );
-    head_1->data = 1;
-    auto head_2 = add_node( head_1 );
-    head_2->data = 2;
-    auto temp = add_after( head_1 );
+    head = add_node( head );
+    head->data = 1;
+    head = add_node( head );
+    head->data = 2;
+    auto temp = add_after( head );
     temp->data = 5;
-    Printlist ( head_2 );
+    printlist( head );
+    iter_rotate( head );
+    //recurse_delete( head->next );
+    printlist( head );
 }
