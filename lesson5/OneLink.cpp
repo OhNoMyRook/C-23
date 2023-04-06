@@ -18,9 +18,10 @@ ListPair* remove_node( ListPair *const head ){ //Удалить указанны
 
 void printlist( ListPair * head ){ //Печать списка в столбик
     while ( head != NULL){
-        std::cout << head->data << " " << std::endl;
-        head = head->next;
-    }   
+        std::cout << head->data << " " ;
+        head = head->next;   
+    } 
+    std::cout << "\n";  
 }
 
 ListPair* add_after( ListPair *const head){ //Добавить после указанного хэдэра
@@ -63,17 +64,46 @@ void iter_rotate(ListPair* &head){ //Итерационная функция п�
     head = prev;
 }
 
+ListPair* sorted;
+
+void sortedInsert(ListPair* newnode){
+    if (sorted == NULL || sorted->data >= newnode->data) {
+        newnode->next = sorted;
+        sorted = newnode;
+    }
+    else {
+        ListPair* current = sorted;
+        while (current->next != NULL && current->next->data < newnode->data) {
+            current = current->next;
+        }
+        newnode->next = current->next;
+        current->next = newnode;
+    }
+}
+
+void insertionSort(ListPair* &head){
+    ListPair* current = head;
+    sorted = NULL;
+    while (current != NULL){
+        ListPair* next = current->next;
+        sortedInsert(current);
+        current = next;
+    }
+    head = sorted;
+}
+
 int main(){
     auto head = add_node( nullptr );
     head->data = 0;
     head = add_node( head );
-    head->data = 1;
+    head->data = 7;
     head = add_node( head );
     head->data = 2;
     auto temp = add_after( head );
     temp->data = 5;
     printlist( head );
+    insertionSort( head );
+    printlist( head );
     iter_rotate( head );
-    //recurse_delete( head->next );
     printlist( head );
 }
