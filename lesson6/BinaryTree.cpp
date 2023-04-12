@@ -71,7 +71,10 @@ void TreeAdd( binary_tree_t **tree, void *data ){
     (*tree)->length++;
 }
 
-auto TreeFind( binary_tree_t **tree, void *data){
+node_t *TreeFind( binary_tree_t **tree, void *data ){  //Поиск в дереве значения data, если такого нет, выводит NULL
+    if( (*tree)->root == NULL ){
+        return NULL;
+    }
     node_t *currentNode = (*tree)->root;
     
     while(1){
@@ -81,22 +84,71 @@ auto TreeFind( binary_tree_t **tree, void *data){
             currentNode = currentNode->left;
             continue;   
             } 
-            else std::cout << "NULL";
-            break;
+            else return NULL;
         }else if ( cmp>0 ){
             if (currentNode->right != NULL){
             currentNode = currentNode->right;  
             continue;  
             } 
-            else std::cout << "NULL";
-            break;
+            else return NULL;
         }
         else{
-            std::cout << *reinterpret_cast<int*>(currentNode+1);
-            break;
+            std::cout << "node is found" << std::endl;
+            return currentNode;  
         }
     }
 }
+
+bool TreeNodeDelete( binary_tree_t **tree, void *data ){ //Удаление ноды,если такая существует и возвращение true(1), иначе false(0)
+    if( (*tree)->root == NULL ){
+        return false;
+    }
+    
+    node_t *currentNode = TreeFind( tree, data );
+    if ( currentNode == NULL ) return false;
+
+    if ( currentNode->right == NULL && currentNode->left == NULL ){
+        node_t *prev = currentNode->parent;
+        delete currentNode;
+        int cmp = (*tree)->compare( reinterpret_cast<void*>(prev+1), data );
+        if ( cmp<0 ){
+            prev->left = NULL;
+            return true;
+        }else{
+            prev->right = NULL;
+            return true;
+        }   
+    }   
+
+    if ( currentNode->right != NULL && currentNode->left == NULL){
+        node_t *prev = currentNode->parent;
+        node_t *next = currentNode->right;
+        delete currentNode;
+        int cmp = (*tree)->compare( reinterpret_cast<void*>(prev+1), data );
+        if ( cmp<0 ){
+            prev->left = next;
+            return true;
+        }else{
+            prev->right = next;
+            return true;
+        }   
+    }  
+
+    if ( currentNode->right == NULL && currentNode->left != NULL){
+        node_t *prev = currentNode->parent;
+        node_t *next = currentNode->left;
+        delete currentNode;
+        int cmp = (*tree)->compare( reinterpret_cast<void*>(prev+1), data );
+        if ( cmp<0 ){
+            prev->left = next;
+            return true;
+        }else{
+            prev->right = next;
+            return true;
+        }   
+    }
+}
+
 
 void integerPreOrder( node_t *root ){
     if( root == NULL )
@@ -133,7 +185,12 @@ int main(){
 
     integerPreOrder( bin_tree->root );
 
-    int val = 10;
+    int val = 9;
     TreeFind( &bin_tree, &val);
 
+    int data = 3;
+    bool check_if_deleted = TreeNodeDelete( &bin_tree, &data );
+
+    integerPreOrder( bin_tree->root );
+    std::cout << check_if_deleted;
 }
