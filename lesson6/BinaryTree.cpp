@@ -73,13 +73,10 @@ void TreeAdd( binary_tree_t **tree, void *data ){
 
 auto TreeFind( binary_tree_t **tree, void *data){
     node_t *currentNode = (*tree)->root;
-    int cmp = (*tree)->compare( reinterpret_cast<void*>(currentNode+1), data );
     
     while(1){
-        if ( cmp==0 ){
-            std::cout << *reinterpret_cast<int*>(currentNode+1);
-            break;
-        }else if ( cmp<0 ){
+        int cmp = (*tree)->compare( reinterpret_cast<void*>(currentNode+1), data );
+        if ( cmp<0 ){
             if ( currentNode->left != NULL ){
             currentNode = currentNode->left;
             continue;   
@@ -92,6 +89,10 @@ auto TreeFind( binary_tree_t **tree, void *data){
             continue;  
             } 
             else std::cout << "NULL";
+            break;
+        }
+        else{
+            std::cout << *reinterpret_cast<int*>(currentNode+1);
             break;
         }
     }
@@ -132,7 +133,7 @@ int main(){
 
     integerPreOrder( bin_tree->root );
 
-    value = 7;
-    TreeFind( &bin_tree, &value);
+    int val = 10;
+    TreeFind( &bin_tree, &val);
 
 }
