@@ -99,8 +99,9 @@ int main(){
     head->data = 7;
     head = add_node( head );
     head->data = 2;
+    printlist( head );
     auto temp = add_after( head );
-    temp->data = 5;
+    temp->data = 1;
     printlist( head );
     insertionSort( head );
     printlist( head );
