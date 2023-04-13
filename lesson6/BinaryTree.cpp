@@ -93,7 +93,6 @@ node_t *TreeFind( binary_tree_t **tree, void *data ){  //Поиск в дере�
             else return NULL;
         }
         else{
-            std::cout << "node is found" << std::endl;
             return currentNode;  
         }
     }
@@ -134,7 +133,7 @@ bool TreeNodeDelete( binary_tree_t **tree, void *data ){ //Удаление но
         }   
     }  
 
-    if ( currentNode->right == NULL && currentNode->left != NULL){
+    if ( currentNode->right == NULL && currentNode->left != NULL ){
         node_t *prev = currentNode->parent;
         node_t *next = currentNode->left;
         delete currentNode;
@@ -147,8 +146,33 @@ bool TreeNodeDelete( binary_tree_t **tree, void *data ){ //Удаление но
             return true;
         }   
     }
-}
 
+    if ( currentNode->right != NULL && currentNode->left!=NULL && currentNode != (*tree)->root ){
+        node_t *prev = currentNode->parent;
+        node_t *next_right = currentNode->right;
+        node_t *next_left = currentNode->left;
+        delete currentNode;
+        int cmp = (*tree)->compare( reinterpret_cast<void*>(prev+1), data );
+        if ( cmp>0 ){
+            prev->right = next_right;
+            next_right->left = next_left;
+            return true;
+        }else{
+            prev->left = next_right;
+            next_right->left = next_left;
+            return true;
+        }   
+    }
+
+    if ( (*tree)->root == currentNode){
+        node_t *new_left = currentNode->left;
+        node_t *new_right = currentNode->right;
+        (*tree)->root = new_right;
+        new_right->left = new_left;
+        return true;
+    }
+
+}
 
 void integerPreOrder( node_t *root ){
     if( root == NULL )
@@ -184,13 +208,17 @@ int main(){
     TreeAdd( &bin_tree, &value );
 
     integerPreOrder( bin_tree->root );
+    std::cout << "\n";
 
     int val = 9;
-    TreeFind( &bin_tree, &val);
+    std::cout << TreeFind( &bin_tree, &val) << std::endl; 
+    std::cout << "\n";
 
-    int data = 3;
+    int data = 7;
     bool check_if_deleted = TreeNodeDelete( &bin_tree, &data );
 
     integerPreOrder( bin_tree->root );
+    std::cout << "\n";
+
     std::cout << check_if_deleted;
 }
