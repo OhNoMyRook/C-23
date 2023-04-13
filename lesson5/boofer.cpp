@@ -21,23 +21,37 @@ void closure( Ring *head ){
 }
 
 void printlist( Ring * head ){ 
-    for ( int i = 1; i<16; i++){
+    for ( int i = 1; i<6; i++){
         std::cout << head->data << " " ;
+        std::cout << "\n";
         head = head->next;   
     }  
 }
 
+int Flaviy( Ring *head, int m ){
+    while( head != head->next){
+        for (int i = 1; i < m; i++){
+        head = head->next;
+        }
+        std::cout << "dead:" << head->next->data << '\n';
+        head->next = head->next->next;
+    }
+    std::cout << "Last alive: " << head->data << '\n';
+    return 0;
+}
+
 int main(){
     auto head = add_node( nullptr );
-    head->data = 0;
+    head->data = 5;
     head = add_node( head );
-    head->data = 7;
+    head->data = 4;
+    head = add_node( head );
+    head->data = 3;
     head = add_node( head );
     head->data = 2;
     head = add_node( head );
-    head->data = 11;
-    head = add_node( head );
-    head->data = 78;
+    head->data = 1;
     closure( head );
     printlist( head );
+    Flaviy( head, 2);
 }
