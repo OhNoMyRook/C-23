@@ -166,7 +166,7 @@ int main(){
     std::ofstream fuout("time.txt");
     std::ofstream gout("amount-1.txt");
     std::ofstream guout("time-1.txt");
-    for (int j = 1; j<=500; j = j+1){
+    for (int j = 1; j<=10000; j = j+1){
         auto begin = std::chrono::steady_clock::now();
             Add(std::to_string(j), adress, N, s);
         auto end = std::chrono::steady_clock::now();
@@ -176,14 +176,14 @@ int main(){
         fuout << time_span.count() << ", ";
         fout << j << ", ";
 
-        /*auto begin_1 = std::chrono::steady_clock::now();
+        auto begin_1 = std::chrono::steady_clock::now();
             Search(std::to_string(j+1), adress, N);
         auto end_1 = std::chrono::steady_clock::now();
         auto time_span_1 =
         std::chrono::duration_cast<std::chrono::milliseconds>(end_1 - begin_1 );
 
         guout << time_span_1.count() << ", ";
-        gout << j << ", ";*/
+        gout << j << ", ";
     }
 
     return 0;
