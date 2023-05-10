@@ -100,7 +100,7 @@ void Delete_Table(std::string name, for_hash* hash_table, int N){
 
 int main(){
     int s = 0;
-    int N = 10;
+    int N = 1100;
     adress = create(N);
     Add("Ben", adress, N, s);
         if ( s >= 0.8*N ){
@@ -162,35 +162,29 @@ int main(){
         std::cout << "not in table" << std::endl;
     If_empty(adress, N);   
 
-    /*std::ofstream fout("amount.txt");
+    std::ofstream fout("amount.txt");
     std::ofstream fuout("time.txt");
+    std::ofstream gout("amount-1.txt");
+    std::ofstream guout("time-1.txt");
     for (int j = 1; j<=500; j = j+1){
         auto begin = std::chrono::steady_clock::now();
-        for (int k = 1; k<=j; k++)
-            Add("Victor", adress, N, s);
+            Add(std::to_string(j), adress, N, s);
         auto end = std::chrono::steady_clock::now();
         auto time_span =
         std::chrono::duration_cast<std::chrono::milliseconds>(end - begin );
 
         fuout << time_span.count() << ", ";
         fout << j << ", ";
+
+        /*auto begin_1 = std::chrono::steady_clock::now();
+            Search(std::to_string(j+1), adress, N);
+        auto end_1 = std::chrono::steady_clock::now();
+        auto time_span_1 =
+        std::chrono::duration_cast<std::chrono::milliseconds>(end_1 - begin_1 );
+
+        guout << time_span_1.count() << ", ";
+        gout << j << ", ";*/
     }
 
-    std::ofstream gout("amount-1.txt");
-    std::ofstream guout("time-1.txt");
-    for (int j = 1; j<=500; j = j+1){
-        auto begin = std::chrono::steady_clock::now();
-        for (int k = 1; k<=j; k++)
-            Search("Victor", adress, N);
-        auto end = std::chrono::steady_clock::now();
-        auto time_span =
-        std::chrono::duration_cast<std::chrono::milliseconds>(end - begin );
-
-        guout << time_span.count() << ", ";
-        gout << j << ", ";
-    }*/
-
     return 0;
-
-
 }
