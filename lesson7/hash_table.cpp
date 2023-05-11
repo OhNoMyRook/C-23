@@ -89,6 +89,7 @@ int Delete(std::string name, for_hash* hash_table, int N){
     return 0;
 }
 
+
 void Delete_Table(std::string name, for_hash* hash_table, int N){
     auto ptr = Search(name, hash_table, N);
     while ( ptr->next != nullptr ){
@@ -162,7 +163,7 @@ int main(){
         std::cout << "not in table" << std::endl;
     If_empty(adress, N);   
 
-    std::ofstream fout("amount.txt");
+    /*std::ofstream fout("amount.txt");
     std::ofstream fuout("time.txt");
     std::ofstream gout("amount-1.txt");
     std::ofstream guout("time-1.txt");
@@ -184,7 +185,7 @@ int main(){
 
         guout << time_span_1.count() << ", ";
         gout << j << ", ";
-    }
+    }*/
 
     return 0;
 }
