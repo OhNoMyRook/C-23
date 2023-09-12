@@ -17,10 +17,16 @@ int main() {
     double arr[] = {3, 1, 4, 10, 2};
     const size_t arr_size = sizeof(arr) / sizeof(arr[0]);
 
+    std::cout << "Unsorted array:\n";
+    for(int i=0; i<5; i++)
+    std::cout << arr[i] << std::endl;
+
     sort(arr, arr_size, comparator);
 
-    for (int i = 0; i < arr_size; ++i) {
-        std::cout << arr[i] << " ";
-    }
+    std::cout << "Sorted array:\n";
+    for(int i=0; i<5; i++)
+        std::cout << arr[i] << std::endl;
+
 }
+
  
