@@ -44,11 +44,14 @@ public:
     };
 
     void addWater(double amount) {
-        this->current_water += amount/this->total_amount;
-
-        for (Container *connection : this->connections) {
-            connection->current_water = this->current_water;
-        };
+        if ((this->current_water+amount/this->total_amount)<0){
+            std::cout << "There is no enough water" << std::endl;
+        }else{
+            this->current_water += amount/this->total_amount;
+            for (Container *connection : this->connections) {
+                connection->current_water = this->current_water;
+            };
+        }
     };
 };
 
@@ -74,7 +77,7 @@ int main(){
     Container e;
     e.connectTo(d);
     std::cout << a.getAmount() << " " << b.getAmount() << " " << c.getAmount() << " " << d.getAmount() << " " << e.getAmount() << std::endl;
-    e.addWater(-6);
+    e.addWater(-100);
     std::cout << a.getAmount() << " " << b.getAmount() << " " << c.getAmount() << " " << d.getAmount() << " " << e.getAmount() << std::endl;
 
     Container f;
