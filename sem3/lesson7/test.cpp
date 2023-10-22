@@ -1,76 +1,65 @@
 #include <iostream>
 #include <vector>
 
- 
 class QueueElement {
     private:
         int value;
         int priority;
     public:
-        QueueElement(int in_value, int in_priority){
+        QueueElement(int in_value, int in_priority) {
             value = in_value;
             priority = in_priority;
         }
-        int get_priority(){
+
+        int get_priority() {
             return priority;
         };
-        int get_value(){
+
+        int get_value() {
             return value;
         };
 };
- 
 
 template<typename T>
 class PriorityQueue {
-  private:
-  std::vector<T> data;
- 
-  public:
-  PriorityQueue() {}
- 
-  void push(T item) {
-    data.push_back(item);
-    int ci = data.size() - 1;
- 
-    while (ci > 0) {
-      int pi = (ci - 1) / 2;
-      if (data[ci].get_priority() <= data[pi].get_priority())
-        break;
-      T tmp = data[ci];
-      data[ci] = data[pi];
-      data[pi] = tmp;
-      ci = pi;
-    }
-  }
- 
-  T poll() {
+    private:
+        std::vector<T> data;
+    public:
+        PriorityQueue() {}
 
-    int li = data.size() - 1;
-    T frontItem = data[0];
-    data[0] = data[li];
-    data.pop_back();
- 
-    --li;
-    int pi = 0;
- 
-    while (true) {
-      int ci = pi * 2 + 1;
-      if (ci > li)
-        break;
-      int rc = ci + 1;
-      if (rc <= li && data[rc].get_priority() < data[ci].get_priority())
-        ci = rc;
-      if (data[pi].get_priority() >= data[ci].get_priority())
-        break;
-      T tmp = data[pi];
-      data[pi] = data[ci];
-      data[ci] = tmp;
-      pi = ci;
-    }
-    return frontItem;
-  }
- 
-  int peek() {
+        void push(T item) {
+            data.push_back(item);  
+            int ci = data.size() - 1;
+            while (ci > 0) {
+                int parent_index = (ci - 1) / 2;
+                if (data[parent_index].get_priority() <= data[ci].get_priority()) {
+break;
+}
+std::swap(data[parent_index], data[ci]);
+ci = parent_index;
+}
+};
+
+    T poll() {
+    if (empty()){
+        } else {
+            int max_element_index = -1; 
+            for (int i = 0; i < data.size() - 1; i++) {
+                if (data[i].get_priority() > data[max_element_index].get_priority()) {
+                    max_element_index = i;
+                }
+            }
+            if (data[max_element_index].get_priority() == 
+                data[data.size() - 1].get_priority()) {
+                max_element_index = data.size() - 1;
+            }  
+            std::swap(data[0], data[max_element_index]);
+            data.pop_back();
+            return data[0];
+        };
+    };
+
+    int peek() {
     T frontItem = data[0];
     return frontItem.get_value();
   }
@@ -79,16 +68,10 @@ class PriorityQueue {
     return data.size();
   }
 
-  bool is_empty(){
-    if (data.size()){
-        return true;
-    }else{
-        return false;
-    }
-  }
-   
+    bool empty() {
+        return data.empty();
+    };
 };
-
 
 int main()
 {
