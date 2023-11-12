@@ -136,7 +136,7 @@ public:
 
     reverse_iterator operator++(int);
 
-     // 11. Наличие метода find для поиска положения ключа в списке
+    // 11. Наличие метода find для поиска положения ключа в списке
     find(const T& key) {
     auto it = std::lower_bound(internalList.begin(), internalList.end(), key, comparator);
     if (it == internalList.end() || comparator(key, *it)) {
@@ -146,7 +146,7 @@ public:
     }
 
     // 12. Наличие метода count, возвращающего количество вхождений заданного ключа
-    count(const T& key) const {
+    count(const T& key){
     auto range = std::equal_range(internalList.begin(), internalList.end(), key, comparator);
     return std::distance(range.first, range.second);
     }
@@ -163,7 +163,7 @@ public:
 
     // 15. Наличие метода clear для удаления всех элементов списка
     clear() {
-    internalList.clear();
+    return internalList.clear();
     }
 
    // 16. Наличие метода erase для удаления элемента из списка по итератору
@@ -176,33 +176,20 @@ public:
     return iterator(internalList.erase(first.iter, last.iter));
     }
     // 18. Возможность создания списка с произвольным компаратором
-    CustomList(const Compare& comp = Compare()) : comparator(comp) {}
+     
+    // (((
 
     // 19. Возможность хранения повторяющихся элементов в списке
     // (предусмотрено по умолчанию, так как std::list поддерживает дубликаты)
 
     // 20. Метод equal_range, возвращающий промежуток итераторов на равные заданному ключу элементы
-    std::pair<typename std::list::iterator, typename std::list::iterator> CustomList<T, Compare>::equal_range(const T& key) {
+    equal_range(const T& key) {
     return std::equal_range(internalList.begin(), internalList.end(), key, comparator);
     }
 };
-}
+};
 
 // Example usage:
 int main() {
-    CustomList<int> myList;
-    myList.insert(5);
-    myList.insert(10);
-    myList.insert(10);
-    myList.insert(15);
-
-    // Use the new methods
-    std::cout << "Count of 10: " << myList.count(10) << std::endl;
-
-    auto range = myList.equal_range(10);
-    std::cout << "Elements equal to 10: ";
-    for (auto it = range.first; it != range.second; ++it) {
-        std::cout << *it << " ";
-    }
-     return 0;
+    return 0;
 }
